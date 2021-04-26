@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: s3-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-microservice
+  namespace: s3-microservice
+spec:
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: "s3-microservice"
+  template:
+    metadata:
+      labels:
+        app: s3-microservice
+    spec:
+      containers:
+      - image: amazon/aws-cli 
+        imagePullPolicy: Always
+        name: s3-microservice
+        #command: ["cat /tmp/configmap"]
+        args: 
+          - s3
+          - ls
+        volumeMounts:
+        - name: configmap
+          mountPath: "/tmp/configmap"
+          readOnly: true
+      volumes:
+      - name: configmap
+        configMap:
+          name: myconfigmap
+      serviceAccountName: s3-microservice
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: s3-microservice
+  namespace: s3-microservice
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::291907804730:role/s3_microservice

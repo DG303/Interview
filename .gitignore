@@ -1,0 +1,9 @@
+*.tfstate*
+credentials.tfvars
+*.swp
+.terraform
+Gemfile.lock
+inspec.lock
+.kitchen
+*.log
+**/files/terraform.json

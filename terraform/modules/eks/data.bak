@@ -1,0 +1,14 @@
+data "aws_ami" "arm64" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["*arm64-gp2 "]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
