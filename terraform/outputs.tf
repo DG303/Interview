@@ -1,7 +1,6 @@
 #
 # Outputs
 #
-
 locals {
   config_map_aws_auth = <<CONFIGMAPAWSAUTH
 
@@ -56,4 +55,8 @@ output "config_map_aws_auth" {
 
 output "kubeconfig" {
   value = local.kubeconfig
+}
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
 }
